@@ -93,7 +93,7 @@ function resolveMatrix(matrix)
 		} else {
 			let timeAtEnd = performance.now();
 			effectiveTime = timeAtEnd - timeAtStart;
-			display("resultBody", "Matrice invalide");
+			display("resultBody", "Aucunes solutions");
 		}
         
 		console.log("time",effectiveTime.toFixed(3)+"ms");
