@@ -59,10 +59,10 @@ function substitution(matrix)
         let n = matrix.length;
         let x = new Array(n);
         for (let i=n-1; i>-1; i--) {
-            x[i] = matrix[i][n]/matrix[i][i];
-            for (let k=i-1; k>-1; k--) {
-                matrix[k][n] -= matrix[k][i] * x[i];
-            }
+			x[i] = matrix[i][n]/matrix[i][i];
+			for (let k = i - 1; k > -1; k--) {
+				matrix[k][n] -= matrix[k][i] * x[i];
+			}
         }
         return x;
     }
@@ -73,25 +73,32 @@ function substitution(matrix)
 }
 
 /**
- * Permet de résoudre la matrice récupérer du fichier .json
+ * Solve a matrix from a file .json
  */
 function resolveMatrix(matrix)
 {
     let effectiveTime;
     try {
         let timeAtStart = performance.now();
-        toTriangularMatrix(matrix);
-        let x = [];
-        if(matrix)
-        {
-            x = substitution(matrix);
-        }
-        let timeAtEnd = performance.now();
-        effectiveTime = timeAtEnd-timeAtStart;
+		matrix = toTriangularMatrix(matrix);
+		if(matrix != null) {
+			let x = [];
+			if (matrix) {
+				x = substitution(matrix);
+			}
+			let timeAtEnd = performance.now();
+			effectiveTime = timeAtEnd - timeAtStart;
+			console.log("Solution Matrix " + x);
+			displayArray("resultBody", x);
+		} else {
+			let timeAtEnd = performance.now();
+			effectiveTime = timeAtEnd - timeAtStart;
+			display("resultBody", "Matrice invalide");
+		}
+        
 		console.log("time",effectiveTime.toFixed(3)+"ms");
 		display("time", effectiveTime.toFixed(3) + "ms");
-		console.log("Solution Matrix " + x);
-		displayArray("resultBody",x)
+		
     } catch (e) {
         console.log("ERROR");
         console.log(e);
@@ -99,6 +106,9 @@ function resolveMatrix(matrix)
     
 }
 
+/*
+* 
+*/
 function solve() {
 	//Retrieve the first (and only!) File from the FileList object
 	let f = document.getElementById('idFile').files[0];
@@ -114,7 +124,9 @@ function solve() {
 		alert("Failed to load file");
 	}
 }
-
+/*
+* format the matrix in a array
+*/
 function formatMatrix(n, A, B) {
 	let matrix = createMatrix(n);
 	let count = 0;
@@ -129,6 +141,9 @@ function formatMatrix(n, A, B) {
 	return matrix;
 }
 
+/*
+* create and return a matrix empty. (n+1, n)
+*/
 function createMatrix(n) {
 	let matrix = Array(n);
 	for (let i = 0; i < matrix.length; ++i) {
@@ -137,10 +152,17 @@ function createMatrix(n) {
 	return matrix;
 }
 
+/*
+*Display text in element (id) 
+*/
 function display(id, text) {
 	let element = document.getElementById(id);
 	element.innerHTML = text;
 }
+
+/*
+* Display array in element(id)
+*/
 
 function displayArray(id, array) {
 	let table = document.getElementById(id);
