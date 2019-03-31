@@ -1,8 +1,38 @@
+<html lang="en">
 <head>
 	<meta charset="UTF-8"></meta>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
 </head>
 <body>
-	<script src="main.js">
-	
-	</script>
+	<div class="container">
+		<h1>Algorithme numérique - Labo 3</h1>
+		<h2>Résolution de système linéaires</h2>
+		<div class="row">
+			<div class="col form-check">
+				<input id="idFile" class="form-check-input" type="file" />
+			</div>
+		</div>
+		<div class="w-100"></div>
+		<br>
+		<div class="w-100"></div>
+		<br>
+		<div class="col">
+			<button class="btn btn-primary" onclick="solve();">Solve</button>
+			<h3>Temps de calcul</h3>
+			<p id="time"></p>
+		</div>
+		<div class="container">
+			<div class="w-100">
+				<h3>Solutions</h3>
+				<table class="table-bordered table-hover fa4-table" style="width: 100%">
+					<tbody id="resultBody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script src="main.js"></script>
 </body>
+</html>

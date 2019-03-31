@@ -56,7 +56,7 @@ function substitution(matrix)
     //solve upper triangular matrix
     if(detTriangular != 0)
     {
-        let n =matrix.length;
+        let n = matrix.length;
         let x = new Array(n);
         for (let i=n-1; i>-1; i--) {
             x[i] = matrix[i][n]/matrix[i][i];
@@ -75,7 +75,7 @@ function substitution(matrix)
 /**
  * Permet de résoudre la matrice récupérer du fichier .json
  */
-function solve(matrix)
+function resolveMatrix(matrix)
 {
     let effectiveTime;
     try {
@@ -88,8 +88,10 @@ function solve(matrix)
         }
         let timeAtEnd = performance.now();
         effectiveTime = timeAtEnd-timeAtStart;
-        console.log("time",effectiveTime.toFixed(3)+"ms");
-        console.log("Solution Matrix " + x);
+		console.log("time",effectiveTime.toFixed(3)+"ms");
+		display("time", effectiveTime.toFixed(3) + "ms");
+		console.log("Solution Matrix " + x);
+		displayArray("resultBody",x)
     } catch (e) {
         console.log("ERROR");
         console.log(e);
@@ -97,11 +99,62 @@ function solve(matrix)
     
 }
 
-
-let matrix = Array(3);
-for(let i=0; i<matrix.length; ++i){
-    matrix[i] = Array(matrix.length + 1);
+function solve() {
+	//Retrieve the first (and only!) File from the FileList object
+	let f = document.getElementById('idFile').files[0];
+	if (f) {
+		var r = new FileReader();
+		r.onload = function (e) {
+			var contents = JSON.parse(e.target.result);
+			matrix = formatMatrix(contents['n'][0], contents['A'], contents['B']);
+			resolveMatrix(matrix);
+		}
+		r.readAsText(f);
+	} else {
+		alert("Failed to load file");
+	}
 }
+
+function formatMatrix(n, A, B) {
+	let matrix = createMatrix(n);
+	let count = 0;
+	for (let i = 0; i < A.length; i++) {
+		if(i%n == 0 && i != 0) {
+			matrix[count][n] = B[count];
+			count++;
+		}
+		matrix[count][i % n] = A[i];
+	}
+	matrix[count][n] = B[count];
+	return matrix;
+}
+
+function createMatrix(n) {
+	let matrix = Array(n);
+	for (let i = 0; i < matrix.length; ++i) {
+		matrix[i] = Array(matrix.length + 1);
+	}
+	return matrix;
+}
+
+function display(id, text) {
+	let element = document.getElementById(id);
+	element.innerHTML = text;
+}
+
+function displayArray(id, array) {
+	let table = document.getElementById(id);
+	table.innerHTML = "";
+	for (let i = 0; i < array.length; i++) {
+		let row = table.insertRow(i);
+		let cellIndex = row.insertCell(0);
+		let cellValue = row.insertCell(1);
+		cellIndex.innerHTML = i+1;
+		cellValue.innerHTML = array[i].toFixed(3);
+	}
+}
+
+matrix = createMatrix(3);
 
 matrix[0][0] = 3;
 matrix[0][1] = 4;
@@ -118,4 +171,4 @@ matrix[2][3] = 7;
 
    
 //console.log(matrix);
-solve(matrix);
+resolveMatrix(matrix);

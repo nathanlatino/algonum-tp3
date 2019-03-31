@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<title>Document</title>
+	<script src="main.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Algorithme numérique - Labo 3</h1>
+		<h2>Résolution de système linéaires</h2>
+		<div class="row">
+			<div class="col form-check">
+				<input id="idFile" class="form-check-input" type="file" />
+			</div>
+		</div>
+		<div class="w-100"></div>
+		<br />
+		<div class="w-100"></div>
+		<br />
+		<div class="col">
+			<button class="btn btn-primary" onclick="solve();">Solve</button>
+			<h3>Temps de calcul</h3>
+			<p id="time"></p>
+		</div>
+		<div class="col">
+			<h3>Matrice augmentée</h3>
+			<p id="pSourceMatrix"></p>
+			<table class="table-bordered table-hover" style="width:100%">
+				<tbody id="matrixBody">
+				</tbody>
+			</table>
+			<h3>Matrice augmentée triangulaire supérieure</h3>
+			<p id="pGaussMatrix"></p>
+			<table class="table-bordered table-hover" style="width:100%">
+				<tbody id="gaussMatrixBody">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="container">
+		<div class="w-100">
+			<h3>Solutions</h3>
+			<table class="table-bordered table-hover" style="width: 100%">
+				<tbody id="resultBody">
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="container">
+		<h2>Contextualisation</h2>
+		<p>Le laboratoire a pour objectif de résoudre un système d'équations linéaire selon la méthode de Gauss.
+			L'utilisateur doit choisir un fichier json
+			qui contient une matrice carrée valide representant les équations et une matrice représentant les résultats
+			de
+			l'équation.
+		</p>
+
+
+	</div>
+	<div class="container">
+		<h2>Méthodologie</h2>
+		<p>Le fichier json contient la matrice d'équations et la matrice de résultat ; on contruit donc la matrice
+			augmentée.
+			On fait ensuite la descente de l'algorithme de Gauss pour obtenir une matrice triangulaire supérieure. Pour
+			ce faire, on
+			cherche la première ligne qui n'a pas un 0 dans la colonne où on effectue les transfomations, et on la swap
+			pour
+			la mettre à
+			la bonne position.
+		</p>
+		<p>Ensuite, on effectue la remontée de l'algorithme de Gauss sur la matrice triangulaire et on met les résultats
+			dans
+			une nouvelle matrice</p>
+
+	</div>
+	<div class="container">
+		<h2>Conclusion</h2>
+		<p>Notre programme permet de trouver les solutions de matrices carrés relativement grandes en des temps de
+			l'ordre
+			des ms</p>
+		<p>Pour trouver des solutions de matrice non carrées ou une matrice où les lignes sont liées, il faudrait
+			pousser le
+			raisonnement
+			plus loin pour fournir des solutions sous forme vectorielle</p>
+	</div>
+</body>
+<script src="main.js"></script>
+
+</html>
