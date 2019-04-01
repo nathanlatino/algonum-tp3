@@ -1,20 +1,67 @@
+<!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8"></meta>
-	
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AlgoNum: tp3</title>
 </head>
+
+
 <body>
-	<h1>Algorithme numérique - Labo 3</h1>
-	<h2>Résolution de système linéaires</h2>
-	<input id="idFile" type="file" />
-	<button onclick="solve();">Solve</button>
-	<h3>Temps de calcul</h3>
-	<p id="time"></p>
-	<h3>Solutions</h3>
-	<table class="table-bordered table-hover fa4-table" style="width: 100%">
-		<tbody id="resultBody">
-		</tbody>
-	</table>
-	<script src="main.js"></script>
+
+<div id="app">
+  <h1>Algorithme numérique - Labo 3</h1>
+  <h2>Résolution de système linéaire</h2>
+  <div>
+    <input @change="handleFile($event)" id="idFile" type="file"/>
+  </div>
+
+  <div v-if="time">
+    <h3>Temps de calcul</h3>
+    <p> {{ time.toFixed(3) }} ms </p>
+  </div>
+
+  <div v-if="solutions">
+    <h3>Solutions ({{ solutions.length }})</h3>
+    <ul>
+      <li v-for="i in solutions">{{ i.toFixed(3) }}</li>
+    </ul>
+  </div>
+</div>
+
+
+<script src="static/vue.js"></script>
+<script src="Matrix.js"></script>
+<script>
+  let app = new Vue({
+    el: '#app',
+
+    data: () => ({
+      matrix: [],
+      time: null,
+      solutions: null,
+    }),
+
+    methods: {
+      handleFile($event) {
+        const input = $event.target;
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          let json = JSON.parse(reader.result);
+          let matrix = new Matrix(json.n[0], json.A, json.B);
+          this.time = matrix.time;
+          this.solutions = matrix.solved;
+        };
+        reader.readAsText(input.files[0]);
+      }
+    }
+  });
+</script>
+
 </body>
+
 </html>
